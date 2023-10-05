@@ -1,0 +1,41 @@
+/* Estilos para el cuerpo de la página */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos para la barra lateral */
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* Estilos para el contenido principal */
+.content {
+    margin-left: 250px; /* Ancho de la barra lateral */
+    padding: 20px;
+}
+
+/* Estilos para los elementos dentro de la barra lateral */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Estilos para los elementos del contenido principal */
+/* Agrega tus estilos específicos aquí */

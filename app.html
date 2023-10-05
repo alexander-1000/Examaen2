@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Lateral con Vue.js</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+        background-color: #246dda;
+    }
+    .cass {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+        z-index: 1;
+        color: #ffffff;
+        transition: left 0.3s;
+        margin-left: 30px; 
+    }
+    .menu {
+      margin-left: -40px;
+        background-color: #1ce050;
+        width: 260px;
+        height: 100vh;
+        position: fixed; 
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 40px 25px;
+        box-shadow: 5px 0 10px #ffff;
+        transition: left 0.3s;
+    }
+
+    .profile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile img {
+        width: 150px;
+        height: 150px;
+        border-radius: 80px;
+        object-fit: cover;
+        margin-left: 20px;
+    }
+
+    .profile-name {
+      margin-left: 2px;
+        font-size: 20px;
+        color: #ffffff;
+    }
+    .menu button {
+        padding: 12px 20px;
+        background-color: #1b51e6;
+        color: white; 
+        border-radius: 20px;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.3s, color 0.3s, width 0.3s; /* Agregamos una transición para suavizar los cambios */
+        outline: none;
+    }
+    .menu button:hover {
+        background-color: gray;
+        transform: scale(1.05);
+        color: white;
+    }
+    .menu-hidden .menu button {
+        width: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .content-area {
+        margin-left: 0;
+        padding: 60px;
+        transition: margin-left 0.3s;
+    }  h1 {
+        padding-bottom: 15px;
+        margin-bottom: 40px;
+        font-weight: normal;
+        font-size: 24px;
+    }
+    p {
+        font-size: 18px;
+    }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    Vue.component('side-menu', {
+        data: function() {
+            return {
+                profileImage: 'cesar.jpg',
+
+                profileName: 'CESAR FUENTES',
+                menuVisible: false
+            };
+        },
+        methods: {
+            toggleMenu() {
+                this.menuVisible = !this.menuVisible;
+    
+                const cass = document.querySelector('.cass');
+                if (this.menuVisible) {
+                    cass.style.left = '280px'; // Ajusta el valor según el ancho del menú
+                } else {
+                    cass.style.left = '20px';
+                }
+            }
+        },
+
+        template: `
+            <div>
+                
+                <div class="cass" @click="toggleMenu">
+                    <i class="fas fa-bars fa-2x"></i>
+                </div>
+                
+                <div class="menu" :class="{ 'menu-hidden': !menuVisible }" :style="{ left: menuVisible ? '0' : '-260px' }">
+                    <div class="profile">
+                        <img :src="profileImage" alt="Foto de perfil">
+                        <div class="profile-name">{{ profileName }}</div>
+                    </div>
+                    <!-- Iconos agregados a los elementos del menú -->
+                    <button @click="$emit('navigate', 'Inicio')"><i class="fas fa-home"></i> Inicio del Menú</button>
+                    <button @click="$emit('navigate', 'Configuración')"><i class="fas fa-cog"></i> Configuración del Menú</button>
+                    <button @click="$emit('navigate', 'Acerca de')"><i class="fas fa-info-circle"></i> Acerca del Menú</button>
+                </div>
+            </div>
+        `,
+    });
+
+    new Vue({
+        el: '#app',
+        data: {
+            
+        },
+        template: `
+            <div>
+                <side-menu @navigate="navigateTo"></side-menu>
+                <div class="content-area" :style="{ marginLeft: menuVisible ? '260px' : '0' }">
+                    <h1>{{ currentView }}</h1>
+
+                </div>
+            </div>
+        `,
+        methods: {
+            navigateTo(view) {
+                this.currentView = view;
+            }
+        }
+    });
+</script>
+    <script src="app.js"></script>
+</body>
+</html>
